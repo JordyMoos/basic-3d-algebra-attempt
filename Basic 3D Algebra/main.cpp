@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <memory>
 
 class Vector3
 {
@@ -17,6 +18,7 @@ public:
 
 	float getLength();
 	void calculateUnit(Vector3& out);
+	std::shared_ptr<Vector3> newUnit();
 };
 
 Vector3::Vector3()
@@ -43,6 +45,15 @@ void Vector3::calculateUnit(Vector3& out)
 	out.z = z / magnitude;
 }
 
+// Normalize the hard way (should not be here but its fun for test)
+std::shared_ptr<Vector3> Vector3::newUnit()
+{
+	std::shared_ptr<Vector3> unit(new Vector3);
+	calculateUnit(*unit);
+
+	return unit;
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector3& vec)
 {
 	os << "(" << vec.x << "," << vec.y << "," << vec.z << ")";
@@ -62,6 +73,12 @@ int main(int argc, char* argv[])
 
 	std::cout << unit << std::endl;
 	std::cout << "Magnitude: " << unit.getLength() << std::endl;
+	std::cout << std::endl;
+
+	auto unit2 = vec.newUnit();
+
+	std::cout << (*unit2) << std::endl;
+	std::cout << "Magnitude: " << unit2->getLength() << std::endl;
 
 	system("pause");
 }
