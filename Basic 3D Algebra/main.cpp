@@ -100,7 +100,8 @@ Vector3 Vector3::operator * (float scale) const
 
 Vector3 Vector3::operator / (float scale) const
 {
-	return Vector3(x / scale, y / scale, z / scale);
+	const float rscale = 1.f / scale;
+	return Vector3(x * rscale, y * rscale, z * rscale);
 }
 
 bool Vector3::equals(float lhs, float rhs) const
