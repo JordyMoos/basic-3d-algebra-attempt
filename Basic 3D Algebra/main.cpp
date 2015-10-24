@@ -16,11 +16,12 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec);
 
 public:
-
 	float getLength();
 	Vector3& calculateUnit(Vector3& out);
 	std::shared_ptr<Vector3> newUnit();
 	Vector3 getUnit();
+
+	Vector3 operator + (const Vector3 rhs) const;
 };
 
 Vector3::Vector3()
@@ -71,6 +72,15 @@ Vector3 Vector3::getUnit()
 	return unit; // Copy constructor
 }
 
+Vector3 Vector3::operator + (const Vector3 rhs) const
+{
+	return Vector3(
+		x + rhs.x,
+		y + rhs.y,
+		z + rhs.z);
+}
+
+// Befriended write vector to stream operation
 std::ostream& operator<<(std::ostream& os, const Vector3& vec)
 {
 	os << "(" << vec.x << "," << vec.y << "," << vec.z << ")";
@@ -81,8 +91,15 @@ std::ostream& operator<<(std::ostream& os, const Vector3& vec)
 int main(int argc, char* argv[])
 {
 	Vector3 vec = Vector3(1, 2, 3);
+	Vector3 vec2 = Vector3(2, 3, 4);
 
-	std::cout << vec << std::endl;
+	Vector3 vec3 = vec + vec2;
+
+	std::cout << "Vec: " << vec << std::endl;
+	std::cout << "Vec2: " << vec2 << std::endl;
+	std::cout << "Vec3: " << vec3 << std::endl;
+	std::cout << std::endl;
+
 	std::cout << "Magnitude: " << vec.getLength() << std::endl;
 	std::cout << std::endl;
 
@@ -103,6 +120,8 @@ int main(int argc, char* argv[])
 
 	std::cout << unit3 << std::endl;
 	std::cout << "Magnitude: " << unit3.getLength() << std::endl;
+	std::cout << std::endl;
+
 
 	system("pause");
 }
