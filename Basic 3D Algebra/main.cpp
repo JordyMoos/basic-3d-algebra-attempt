@@ -3,6 +3,8 @@
 #include <cmath>
 #include <memory>
 
+const float EPSILON = 0.001f;
+
 class Vector3
 {
 public:
@@ -21,7 +23,14 @@ public:
 	std::shared_ptr<Vector3> newUnit();
 	Vector3 getUnit();
 
-	Vector3 operator + (const Vector3 rhs) const;
+	Vector3 operator + (const Vector3& rhs) const;
+	Vector3 operator - (const Vector3& rhs) const;
+
+	bool operator == (const Vector3& rhs) const;
+	bool operator != (const Vector3& rhs) const;
+
+private:
+	bool equals(float lhs, float rhs) const;
 };
 
 Vector3::Vector3()
@@ -72,12 +81,37 @@ Vector3 Vector3::getUnit()
 	return unit; // Copy constructor
 }
 
-Vector3 Vector3::operator + (const Vector3 rhs) const
+Vector3 Vector3::operator + (const Vector3& rhs) const
 {
 	return Vector3(
 		x + rhs.x,
 		y + rhs.y,
 		z + rhs.z);
+}
+
+Vector3 Vector3::operator - (const Vector3& rhs) const
+{
+	return Vector3(
+		x - rhs.x,
+		y - rhs.y,
+		z - rhs.z);
+}
+
+bool Vector3::equals(float lhs, float rhs) const
+{
+	return fabs(lhs - rhs) < EPSILON;
+}
+
+bool Vector3::operator == (const Vector3& rhs) const
+{
+	return equals(x, rhs.x)
+		&& equals(y, rhs.y)
+		&& equals(z, rhs.z);
+}
+
+bool Vector3::operator != (const Vector3& rhs) const
+{
+	return !operator==(rhs);
 }
 
 // Befriended write vector to stream operation
@@ -98,30 +132,36 @@ int main(int argc, char* argv[])
 	std::cout << "Vec: " << vec << std::endl;
 	std::cout << "Vec2: " << vec2 << std::endl;
 	std::cout << "Vec3: " << vec3 << std::endl;
+	std::cout << "Vec2: " << (vec3 - vec) << std::endl;
 	std::cout << std::endl;
 
-	std::cout << "Magnitude: " << vec.getLength() << std::endl;
+	std::cout << "Vec1 Magnitude: " << vec.getLength() << std::endl;
 	std::cout << std::endl;
 
 	Vector3 unit = Vector3();
 	vec.calculateUnit(unit);
 
 	std::cout << vec.calculateUnit(unit) << std::endl;
-	std::cout << "Magnitude: " << unit.getLength() << std::endl;
+	std::cout << "Unit Magnitude: " << unit.getLength() << std::endl;
 	std::cout << std::endl;
 
 	auto unit2 = vec.newUnit();
 
 	std::cout << (*unit2) << std::endl;
-	std::cout << "Magnitude: " << unit2->getLength() << std::endl;
+	std::cout << "Unit Magnitude: " << unit2->getLength() << std::endl;
 	std::cout << std::endl;
 
 	Vector3 unit3 = vec.getUnit();
 
 	std::cout << unit3 << std::endl;
-	std::cout << "Magnitude: " << unit3.getLength() << std::endl;
+	std::cout << "Unit Magnitude: " << unit3.getLength() << std::endl;
 	std::cout << std::endl;
 
+	std::cout << "Equal check:" << std::endl;
+	std::cout << "vec==vec2: " << (vec == vec2) << std::endl;
+	std::cout << "vec!=vec2: " << (vec != vec2) << std::endl;
+	std::cout << "unit==unit3: " << (unit == unit3) << std::endl;
+	std::cout << "unit!=unit3: " << (unit != unit3) << std::endl;
 
 	system("pause");
 }
