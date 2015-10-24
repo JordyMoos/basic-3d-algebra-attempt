@@ -18,7 +18,7 @@ public:
 public:
 
 	float getLength();
-	void calculateUnit(Vector3& out);
+	Vector3& calculateUnit(Vector3& out);
 	std::shared_ptr<Vector3> newUnit();
 	Vector3 getUnit();
 };
@@ -42,13 +42,15 @@ float Vector3::getLength()
 }
 
 // Create a normalized version
-void Vector3::calculateUnit(Vector3& out)
+Vector3& Vector3::calculateUnit(Vector3& out)
 {
 	float magnitude = getLength();
 
 	out.x = x / magnitude;
 	out.y = y / magnitude;
 	out.z = z / magnitude;
+
+	return out;
 }
 
 // Normalize the hard way (should not be here but its fun for test)
@@ -87,7 +89,7 @@ int main(int argc, char* argv[])
 	Vector3 unit = Vector3();
 	vec.calculateUnit(unit);
 
-	std::cout << unit << std::endl;
+	std::cout << vec.calculateUnit(unit) << std::endl;
 	std::cout << "Magnitude: " << unit.getLength() << std::endl;
 	std::cout << std::endl;
 
@@ -104,4 +106,3 @@ int main(int argc, char* argv[])
 
 	system("pause");
 }
-
