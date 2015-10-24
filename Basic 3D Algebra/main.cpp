@@ -25,6 +25,8 @@ public:
 
 	Vector3 operator + (const Vector3& rhs) const;
 	Vector3 operator - (const Vector3& rhs) const;
+	Vector3 operator * (float scale) const;
+	Vector3 operator / (float scale) const;
 
 	bool operator == (const Vector3& rhs) const;
 	bool operator != (const Vector3& rhs) const;
@@ -83,18 +85,22 @@ Vector3 Vector3::getUnit()
 
 Vector3 Vector3::operator + (const Vector3& rhs) const
 {
-	return Vector3(
-		x + rhs.x,
-		y + rhs.y,
-		z + rhs.z);
+	return Vector3( x + rhs.x, y + rhs.y, z + rhs.z);
 }
 
 Vector3 Vector3::operator - (const Vector3& rhs) const
 {
-	return Vector3(
-		x - rhs.x,
-		y - rhs.y,
-		z - rhs.z);
+	return Vector3( x - rhs.x, y - rhs.y, z - rhs.z);
+}
+
+Vector3 Vector3::operator * (float scale) const
+{
+	return Vector3(x * scale, y * scale, z * scale);
+}
+
+Vector3 Vector3::operator / (float scale) const
+{
+	return Vector3(x / scale, y / scale, z / scale);
 }
 
 bool Vector3::equals(float lhs, float rhs) const
@@ -162,6 +168,14 @@ int main(int argc, char* argv[])
 	std::cout << "vec!=vec2: " << (vec != vec2) << std::endl;
 	std::cout << "unit==unit3: " << (unit == unit3) << std::endl;
 	std::cout << "unit!=unit3: " << (unit != unit3) << std::endl;
+	std::cout << std::endl;
+
+	Vector3 vec4 = Vector3(2, 2, 2);
+	Vector3 multiplied = vec4 * 2.0f;
+	Vector3 divided = multiplied / 2.0f;
+	std::cout << "Vec4: " << vec4 << std::endl;
+	std::cout << "Vec4 * 2: " << multiplied << std::endl;
+	std::cout << "(Vec4 * 2) / 2: " << divided << std::endl;
 
 	system("pause");
 }
