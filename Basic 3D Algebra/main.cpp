@@ -14,6 +14,7 @@ public:
 
 public:
 	Vector3();
+	explicit Vector3(float f);
 	Vector3(const Vector3& vec);
 	Vector3(float x, float y, float z);
 
@@ -39,6 +40,10 @@ private:
 
 Vector3::Vector3()
 	: x(.0f), y(.0f), z(.0f)
+{}
+
+Vector3::Vector3(float f)
+	: x(f), y(f), z(f)
 {}
 
 Vector3::Vector3(const Vector3& vec)
@@ -135,13 +140,14 @@ int main(int argc, char* argv[])
 {
 	Vector3 vec = Vector3(1, 2, 3);
 	Vector3 vec2 = Vector3(2, 3, 4);
-
 	Vector3 vec3 = vec + vec2;
+	Vector3 vec5 = Vector3(10.0f);
 
 	std::cout << "Vec: " << vec << std::endl;
 	std::cout << "Vec2: " << vec2 << std::endl;
 	std::cout << "Vec3: " << vec3 << std::endl;
 	std::cout << "Vec2: " << (vec3 - vec) << std::endl;
+	std::cout << "Vec5: " << vec5 << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "Vec1 Magnitude: " << vec.getLength() << std::endl;
