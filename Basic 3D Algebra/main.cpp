@@ -3,6 +3,8 @@
 #include <cmath>
 #include <memory>
 
+#include "windows.h"
+
 const float EPSILON = 0.001f;
 
 class Vector3
