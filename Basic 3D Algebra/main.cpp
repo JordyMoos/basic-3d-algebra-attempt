@@ -20,6 +20,7 @@ public:
 	float getLength();
 	void calculateUnit(Vector3& out);
 	std::shared_ptr<Vector3> newUnit();
+	Vector3 getUnit();
 };
 
 Vector3::Vector3()
@@ -59,6 +60,15 @@ std::shared_ptr<Vector3> Vector3::newUnit()
 	return unit;
 }
 
+// This version will call the constructor and copy constructor
+Vector3 Vector3::getUnit()
+{
+	Vector3 unit = Vector3(); // Constructor
+	calculateUnit(unit);
+
+	return unit; // Copy constructor
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector3& vec)
 {
 	os << "(" << vec.x << "," << vec.y << "," << vec.z << ")";
@@ -69,6 +79,7 @@ std::ostream& operator<<(std::ostream& os, const Vector3& vec)
 int main(int argc, char* argv[])
 {
 	Vector3 vec = Vector3(1, 2, 3);
+
 	std::cout << vec << std::endl;
 	std::cout << "Magnitude: " << vec.getLength() << std::endl;
 	std::cout << std::endl;
@@ -84,6 +95,12 @@ int main(int argc, char* argv[])
 
 	std::cout << (*unit2) << std::endl;
 	std::cout << "Magnitude: " << unit2->getLength() << std::endl;
+	std::cout << std::endl;
+
+	Vector3 unit3 = vec.getUnit();
+
+	std::cout << unit3 << std::endl;
+	std::cout << "Magnitude: " << unit3.getLength() << std::endl;
 
 	system("pause");
 }
