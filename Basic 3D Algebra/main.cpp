@@ -10,6 +10,7 @@ public:
 
 public:
 	Vector3();
+	Vector3(const Vector3& vec);
 	Vector3(float x, float y, float z);
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec);
@@ -23,6 +24,10 @@ public:
 
 Vector3::Vector3()
 	: x(.0f), y(.0f), z(.0f)
+{}
+
+Vector3::Vector3(const Vector3& vec)
+	: x(vec.x), y(vec.y), z(vec.z)
 {}
 
 Vector3::Vector3(float x, float y, float z)
